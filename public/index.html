@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lime Quarry Stock</title>
+  <meta charset="UTF-8" />
+</head>
+<body>
+  <h1>Current Stock</h1>
+  <ul id="stock"></ul>
+
+  <h2>Recently Used</h2>
+  <ul id="usage"></ul>
+
+  <script>
+    fetch('/api/stock')
+      .then(res => res.json())
+      .then(data => {
+        const stockList = document.getElementById('stock');
+        data.forEach(item => {
+          const li = document.createElement('li');
+          li.textContent = `${item.name}: ${item.stock_level} units`;
+          stockList.appendChild(li);
+        });
+      });
+
+    fetch('/api/usage')
+      .then(res => res.json())
+      .then(data => {
+        const usageList = document.getElementById('usage');
+        data.forEach(item => {
+          const li = document.createElement('li');
+          li.textContent = `${item.name} - ${item.amount_used} used on ${item.used_at}`;
+          usageList.appendChild(li);
+        });
+      });
+  </script>
+</body>
+</html>
